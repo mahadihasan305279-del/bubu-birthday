@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for my Bubu ❤️</title>
+    <style>
+        :root {
+            --primary: #ff4b72;
+            --secondary: #ff85a1;
+            --bg: #fff0f3;
+            --card-bg: #ffffff;
+            --text-color: #2b2d42;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 15px;
+        }
+
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--primary);
+            animation: floatUp 4s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.6); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        .music-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 75, 114, 0.4);
+            z-index: 1000;
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 450px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px 25px;
+            text-align: center;
+            position: relative;
+            z-index: 20;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            animation: fadeIn 0.6s ease-in-out forwards;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .envelope-box {
+            background: #ffe5ec;
+            border: 3px dashed var(--primary);
+            border-radius: 15px;
+            padding: 40px 20px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s ease;
+            margin: auto 0;
+        }
+
+        .envelope-box:hover {
+            transform: scale(1.03);
+        }
+
+        .envelope-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .envelope-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: bold;
+            text-transform: lowercase;
+        }
+
+        .icon-box {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        .caption {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+            margin: 15px 0;
+        }
+
+        .text-only-box {
+            margin: auto 0;
+            padding: 10px;
+        }
+
+        .funny-quote {
+            font-size: 1.3rem;
+            color: #d80032;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            flex: 1;
+        }
+
+        .btn:hover {
+            background: #d80032;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://codeskulptor-demos.commondatastorage.googleapis.com/EOD5A.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-btn" onclick="toggleMusic()" title="Play/Pause Music">🎵</button>
+
+    <div id="hearts-container"></div>
+
+    <div class="card-container">
+
+        <!-- Page 1: Envelope -->
+        <div class="slide active" id="slide1">
+            <div class="envelope-box" onclick="nextSlideWithMusic()">
+                <span class="envelope-icon">💌</span>
+                <div class="envelope-title">surprise for my bubu</div>
+                <p style="font-size: 0.85rem; color: #888; margin-top: 10px;">(Tap to open the letter)</p>
+            </div>
+        </div>
+
+        <!-- Page 2 (Fixed Pronoun/Text) -->
+        <div class="slide" id="slide2">
+            <div class="text-only-box">
+                <div class="icon-box">💖</div>
+                <p class="caption" style="font-size: 1.3rem; color: var(--primary);">
+                    ohoooo ajke kar jeno birthday... eta ki amr bubu afifa naki? ❤️
+                </p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevSlide()">⬅ Back</button>
+                <button class="btn" onclick="nextSlide()">Next ➔</button>
+            </div>
+        </div>
+
+        <!-- Page 3 -->
+        <div class="slide" id="slide3">
+            <div class="text-only-box">
+                <div class="icon-box">👩‍❤️‍👨</div>
+                <p class="caption">
+                    mone ache amder ei 1st meet? ekhon o mone pore etar kotha, cz eta bhulabar moto na…
+                </p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevSlide()">⬅ Back</button>
+                <button class="btn" onclick="nextSlide()">Next ➔</button>
+            </div>
+        </div>
+
+        <!-- Page 4 -->
+        <div class="slide" id="slide4">
+            <div class="text-only-box">
+                <div class="icon-box">✨</div>
+                <p class="caption">
+                    I don’t know how to express my feelings for you... I can't put it into words, but I try and try...
+                </p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevSlide()">⬅ Back</button>
+                <button class="btn" onclick="nextSlide()">Next ➔</button>
+            </div>
+        </div>
+
+        <!-- Page 5 -->
+        <div class="slide" id="slide5">
+            <div class="text-only-box">
+                <div class="icon-box">🥰</div>
+                <p class="caption">
+                    I try my best to keep you happy, though I don't know if I really can. But trust me, when I'm with you, I am the happiest person alive. Please never leave me... ❤️
+                </p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevSlide()">⬅ Back</button>
+                <button class="btn" onclick="nextSlide()">Next ➔</button>
+            </div>
+        </div>
+
+        <!-- Page 6 -->
+        <div class="slide" id="slide6">
+            <div class="text-only-box">
+                <div class="icon-box">🎁</div>
+                <p class="funny-quote">
+                    "I was going to buy you the perfect birthday gift, but then I realized you already have me." 😉❤️
+                </p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevSlide()">⬅ Back</button>
+                <button class="btn" onclick="nextSlide()">Next ➔</button>
+            </div>
+        </div>
+
+        <!-- Page 7 -->
+        <div class="slide" id="slide7">
+            <div class="text-only-box">
+                <div class="icon-box">💍</div>
+                <p class="caption" style="color: #d80032; font-weight: bold; font-size: 1.3rem;">
+                    I love you so much, please stay with me till the end. Happy Birthday! ❤️✨
+                </p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevSlide()">⬅ Back</button>
+                <button class="btn" onclick="goToSlide(1)">Replay 🔄</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 7;
+
+        function showSlide(index) {
+            document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+            document.getElementById(`slide${index}`).classList.add('active');
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        function nextSlideWithMusic() {
+            const music = document.getElementById('bg-music');
+            music.play().then(() => {
+                console.log("Music playing");
+            }).catch(e => {
+                console.log("Audio play error:", e);
+            });
+            nextSlide();
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = Math.random() * 15 + 12 + 'px';
+            document.getElementById('hearts-container').appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
